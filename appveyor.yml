@@ -1,0 +1,55 @@
+
+#
+# Current setup:
+# - All development is done in a branch and/or fork.
+# - Create a PR to 'master' branch.
+# - To publish a live NuGet package, create a tag on master branch. This usually occurs after a PR is accepted.
+#
+
+version: '{build}.0.0-dev'
+configuration: Release
+os: Visual Studio 2017
+pull_requests:
+  do_not_increment_build_number: true
+
+# Override the 'version' if this is a GH-tag-commit -or- this is a custom branch (i.e not 'master').
+init:
+  - ps: |
+      if ($env:APPVEYOR_REPO_TAG -eq $TRUE -and $env:APPVEYOR_REPO_BRANCH -eq 'master')
+      { 
+          Write-Host " !! Commit is Tagged and branch is 'master' - forcing build version to tag-value." -ForegroundColor Red; 
+          Update-AppveyorBuild -Version "$env:APPVEYOR_REPO_TAG_NAME"
+      }
+      iex ((new-object net.webclient).DownloadString('https://gist.githubusercontent.com/PureKrome/0f79e25693d574807939/raw/f5b40256fc2ca77d49f1c7773d28406152544c1e/appveyor-build-info.ps'))
+
+install:
+  - cmd: choco install dotnetcore-sdk -y
+                                         
+before_build:
+  - dotnet --info
+  - dotnet restore 
+
+build_script:
+  - dotnet build -c %CONFIGURATION% /p:Version=%APPVEYOR_BUILD_VERSION%
+
+after_build:
+  - dotnet pack "src\Serilog.Sinks.InsightOps\Serilog.Sinks.InsightOps.csproj" -c %CONFIGURATION% /p:Version=%APPVEYOR_BUILD_VERSION% --no-build
+
+test: off
+
+artifacts:
+  - path: '**\*.nupkg'
+    name: nuget-packages
+    type: NuGetPackage
+  - path: '**\*.snupkg'
+    name: nuget-symbols
+    type: NuGetPackage
+
+deploy:
+  - provider: NuGet
+    api_key:
+      secure: jfcUvHZhgnUboplqTBDWr8mG5PIlrgBv5TA2fhhop4ZSiDxskyy+RtYyeHoduJFR
+    skip_symbols: true
+    on:
+      branch: master
+      appveyor_repo_tag: true
