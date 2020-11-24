@@ -55,8 +55,10 @@ test: off
 artifacts:
   - path: '**\*.nupkg'
     name: nuget-packages
+    type: NuGetPackage
   - path: '**\*.snupkg'
     name: nuget-symbols
+    type: NuGetPackage
 
 deploy:
   - provider: NuGet
