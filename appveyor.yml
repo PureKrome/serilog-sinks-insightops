@@ -38,13 +38,12 @@ build_script:
   - ps: dotnet build -c $env:CONFIGURATION -v minimal /p:Version=$env:APPVEYOR_BUILD_VERSION --no-restore
 
 # We only:
-#   - Send DEBUG results up to codecov.
 #   - Pack for RELEASE only.
 after_build:
   - ps: |
       if ($env:CONFIGURATION -eq 'Release')
       {
-          dotnet pack "src\Serilog.Sinks.InsightOps\Serilog.Sinks.InsightOps.csproj" -c $env:CONFIGURATION --include-symbols -p:SymbolPackageFormat=snupkg /p:Version=$env:APPVEYOR_BUILD_VERSION --no-build
+          dotnet pack -c $env:CONFIGURATION --no-build /p:Version=$env:APPVEYOR_BUILD_VERSION /p:ContinuousIntegrationBuild=true "src\Serilog.Sinks.InsightOps\Serilog.Sinks.InsightOps.csproj"
       }
 
 test: off
@@ -52,10 +51,8 @@ test: off
 artifacts:
   - path: '**\*.nupkg'
     name: nuget-packages
-    type: NuGetPackage
   - path: '**\*.snupkg'
     name: nuget-symbols
-    type: NuGetPackage
 
 deploy:
   - provider: NuGet

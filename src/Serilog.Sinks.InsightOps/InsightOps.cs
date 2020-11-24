@@ -11,14 +11,14 @@ namespace Serilog.Sinks.InsightOps
         private readonly AsyncLogger _asyncLogger;
         
         public InsightOps(InsightOpsSettings config,
-                          IFormatProvider formatProvider)
+                          IFormatProvider formatProvider = null)
         {
             if (config is null)
             {
                 throw new ArgumentNullException(nameof(config));
             }
 
-            _formatProvider = formatProvider ?? throw new ArgumentNullException(nameof(formatProvider));
+            _formatProvider = formatProvider; // Optional.
 
             _asyncLogger = new AsyncLogger();
             _asyncLogger.setToken(config.Token);
@@ -41,7 +41,7 @@ namespace Serilog.Sinks.InsightOps
         /// <summary>
         /// Dispose should automatically be called by Serilog when it Flushes.
         /// </summary>
-        /// <remarks>REF: https://github.com/serilog/serilog/wiki/Developing-a-sink#releasing-resources</remarks>
+        /// <remarks>REF: https://github.com/serilog/serilog/wiki/Developing-a-sink#releasing-resources </remarks>
         public void Dispose()
         {
             if (_asyncLogger is null)
