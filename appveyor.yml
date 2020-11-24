@@ -11,6 +11,10 @@ image: Ubuntu
 pull_requests:
   do_not_increment_build_number: true
 
+branches:
+  only:
+    - master
+
 matrix:
   fast_finish: true
 
