@@ -40,4 +40,3 @@ App_Data/
 *.nupkg
 *.vs
 *.vscode
-scripts/report*

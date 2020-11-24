@@ -14,10 +14,10 @@ namespace Serilog.Sinks.InsightOps.ConsoleTest
             Console.WriteLine("Starting.");
             
             // NOTE: Please replace with your own settings.
-            var settings = new InsightOpsSettings
+            var settings = new InsightOpsSinkSettings
             {
-                Region = "<to fill in by you>",
-                Token = "<to fill in by you>",
+                Region = "au", // au, eu, jp or us
+                Token = "<some guid from your account>",
                 UseSsl = false
             };
 

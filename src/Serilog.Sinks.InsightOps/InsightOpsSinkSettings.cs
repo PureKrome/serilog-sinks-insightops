@@ -2,7 +2,7 @@ using InsightCore.Net;
 
 namespace Serilog.Sinks.InsightOps
 {
-    public class InsightOpsSettings : IAsyncLoggerConfig
+    public class InsightOpsSinkSettings : IAsyncLoggerConfig
     {
         /// <summary>
         /// The unique token GUID of the log to send messages to. This applies when using the newer token-based logging.
@@ -16,45 +16,28 @@ namespace Serilog.Sinks.InsightOps
         /// <see cref="https://insightops.help.rapid7.com/docs/rest-api-overview#section-supported-regions"/>
         public string Region { get; set; }
 
-        /// <summary>
-        /// Set to true to use SSL to send data to InsightOps.
-        /// </summary>
-        /// <remarks>Using SSL secures your payload via HTTPS while insecure uses raw TCP over port 10,000. HTTPS adds a tiny performance hit compared to the raw TCP.</remarks>
+        /// <inheritdoc />
         public bool UseSsl { get; set; }
 
-        /// <summary>
-        /// Ignored / not used.
-        /// </summary>
+        /// <inheritdoc />
         public bool Debug { get; set; }
 
-        /// <summary>
-        /// Ignored / not used.
-        /// </summary>
+        /// <inheritdoc />
         public bool IsUsingDataHub { get; set; }
 
-        /// <summary>
-        /// Ignored / not used.
-        /// </summary>
+        /// <inheritdoc />
         public string DataHubAddress { get; set; }
 
-        /// <summary>
-        /// Ignored / not used.
-        /// </summary>
+        /// <inheritdoc />
         public int DataHubPort { get; set; }
 
-        /// <summary>
-        /// Ignored / not used.
-        /// </summary>
+        /// <inheritdoc />
         public bool LogHostname { get; set; }
 
-        /// <summary>
-        /// Ignored / not used.
-        /// </summary>
+        /// <inheritdoc />
         public string HostName { get; set; }
 
-        /// <summary>
-        /// Ignored / not used.
-        /// </summary>
+        /// <inheritdoc />
         public string LogID { get; set; }
     }
 }
