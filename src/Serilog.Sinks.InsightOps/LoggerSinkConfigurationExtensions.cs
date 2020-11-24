@@ -17,12 +17,12 @@ namespace Serilog.Sinks.InsightOps
         /// <param name="levelSwitch">A switch allowing the pass-through minimum level to be changed at runtime.</param>
         /// <returns></returns>
         public static LoggerConfiguration InsightOps(this LoggerSinkConfiguration loggerConfiguration,
-                                                     InsightOpsSettings config,
+                                                     InsightOpsSinkSettings config,
                                                      LogEventLevel restrictedToMinimumLevel = LogEventLevel.Verbose,
                                                      IFormatProvider formatProvider = null,
                                                      LoggingLevelSwitch levelSwitch = null)
         {
-            return loggerConfiguration.Sink(new InsightOps(config, formatProvider), restrictedToMinimumLevel, levelSwitch);
+            return loggerConfiguration.Sink(new InsightOpsSink(config, formatProvider), restrictedToMinimumLevel, levelSwitch);
         }
     }
 }

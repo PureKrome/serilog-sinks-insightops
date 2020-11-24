@@ -1,24 +1,52 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
+<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>netstandard2.0</TargetFramework>
+    <TargetFrameworks>netstandard2.0;net5.0</TargetFrameworks>
 
-    <!-- Optional: Publish the repository URL in the built .nupkg (in the NuSpec <Repository> element) -->
+    <Authors>Pure Krome</Authors>
+    <Company>World Domination Technologies</Company>
+    <Product>Serilog.Sinks.InsightOps</Product>
+    <Description>A Serilog sink that writes log events to Rapid 7's InsightOps (https://insight.rapid7.com/).</Description>
+    <Copyright>2019</Copyright>
+    <OutputType>Library</OutputType>
+    <PackageProjectUrl>https://github.com/PureKrome/SimpleHosting</PackageProjectUrl>
+    <PackageLicenseFile>LICENSE</PackageLicenseFile>
+    <RepositoryUrl>https://github.com/PureKrome/SimpleHosting</RepositoryUrl>
+    <RepositoryType>.net c# .net-core</RepositoryType>
+    <PackageTags>serilog logging rapid7 insightops world-domination unicorn magicalunicorn magical-unicorn</PackageTags>
+
+    <!-- Microsoft.NET.Sdk.Web aren't ment for packaging into dll's. You usually publish a website.
+         As such, we need to specify that this is ok to do -->
+    <IsPackable>true</IsPackable>
+
+    <!-- Source Link. REF: https://github.com/dotnet/sourcelink -->
     <PublishRepositoryUrl>true</PublishRepositoryUrl>
-
-    <!-- Optional: Embed source files that are not tracked by the source control manager in the PDB -->
     <EmbedUntrackedSources>true</EmbedUntrackedSources>
-
-    <!-- Optional: Build symbol package (.snupkg) to distribute the PDB containing Source Link -->
     <IncludeSymbols>true</IncludeSymbols>
     <SymbolPackageFormat>snupkg</SymbolPackageFormat>
+    <PackageIcon>icon.png</PackageIcon>
+    <PackageIconUrl />
     
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Microsoft.SourceLink.GitHub" Version="1.0.0" PrivateAssets="All" />
-    <PackageReference Include="R7Insight.Core" Version="2.9.0" />
-    <PackageReference Include="Serilog" Version="2.9.0" />
+    <PackageReference Include="Microsoft.SourceLink.GitHub" Version="1.0.0">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+    <PackageReference Include="R7Insight.Core" Version="2.9.1" />
+    <PackageReference Include="Serilog" Version="2.10.0" />
   </ItemGroup>
 
+  <ItemGroup>
+    <None Include="..\..\LICENSE">
+      <Pack>True</Pack>
+      <PackagePath></PackagePath>
+    </None>
+    <None Include="..\..\icon.png">
+      <Pack>True</Pack>
+      <PackagePath></PackagePath>
+    </None>
+  </ItemGroup>
+  
 </Project>
