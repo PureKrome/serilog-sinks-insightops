@@ -1,10 +1,11 @@
 using System;
+using Serilog.Formatting.Compact;
 
 namespace Serilog.Sinks.InsightOps.ConsoleTest
 {
     public class Program
     {
-        static void Main(string[] args)
+        static void Main()
         {
             // If something is wrong with our Serilog setup, 
             // lets make sure we can see what the problem is.
@@ -24,8 +25,9 @@ namespace Serilog.Sinks.InsightOps.ConsoleTest
             // Create our logger.
             var log = new LoggerConfiguration()
                 .MinimumLevel.Debug()
-                .WriteTo.InsightOps(settings)
-                .WriteTo.Console()
+                .WriteTo.InsightOps(settings, new RenderedCompactJsonFormatter())
+                .WriteTo.Console(new CompactJsonFormatter())
+                .WriteTo.Seq("http://localhost:5301")
                 .CreateLogger();
 
             // Log some fake info.
