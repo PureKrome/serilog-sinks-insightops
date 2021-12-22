@@ -16,10 +16,10 @@ Install-Package Serilog.Sinks.InsightOps
 Next, define you insightOps account settings:
 
 ```csharp
-var settings = new InsightOpsSettings
+var settings = new InsightOpsSinkSettings
 {
-    Region = "<to fill in by you>",
-    Token = "<to fill in by you>",
+    Region = "<to fill in by you>", // au, eu, jp or us
+    Token = "<to fill in by you>", // Guid, taken from your InsightOps log account
     UseSsl = false // or True for sending via HTTPS
 };
 ```

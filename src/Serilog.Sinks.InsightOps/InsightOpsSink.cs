@@ -1,7 +1,9 @@
 using InsightCore.Net;
 using Serilog.Core;
 using Serilog.Events;
+using Serilog.Formatting.Display;
 using System;
+using System.IO;
 
 namespace Serilog.Sinks.InsightOps
 {
@@ -9,7 +11,13 @@ namespace Serilog.Sinks.InsightOps
     {
         private readonly IFormatProvider _formatProvider;
         private readonly AsyncLogger _asyncLogger;
-        
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="config">Settings for this</param>
+        /// <param name="outputTemplate">Message template describing the output format.</param>
+        /// <param name="formatProvider">Supplies culture-specific formatting information, or null.</param>
         public InsightOpsSink(InsightOpsSinkSettings config,
                               IFormatProvider formatProvider = null)
         {
@@ -45,7 +53,12 @@ namespace Serilog.Sinks.InsightOps
                 throw new ArgumentNullException(nameof(logEvent));
             }
 
-            var message = logEvent.RenderMessage(_formatProvider);
+            var output = new StringWriter();
+
+            var formatter = new MessageTemplateTextFormatter("asdsd", _formatProvider);
+            formatter.Format(logEvent, output);
+            
+            var message = logEvent.RenderMessage(output.ToString());
 
             _asyncLogger.AddLine(message);
         }
