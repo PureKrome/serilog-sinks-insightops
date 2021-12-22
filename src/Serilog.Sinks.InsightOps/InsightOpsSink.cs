@@ -1,25 +1,30 @@
+using System;
+using System.IO;
 using InsightCore.Net;
 using Serilog.Core;
 using Serilog.Events;
-using System;
+using Serilog.Formatting;
 
 namespace Serilog.Sinks.InsightOps
 {
     public class InsightOpsSink : ILogEventSink, IDisposable
     {
-        private readonly IFormatProvider _formatProvider;
         private readonly AsyncLogger _asyncLogger;
-        
-        public InsightOpsSink(InsightOpsSinkSettings config,
-                              IFormatProvider formatProvider = null)
+        private readonly ITextFormatter _textFormatter;
+
+        /// <summary>
+        /// The insightOps sink -> a service which sends log messages to insightOps.
+        /// </summary>
+        /// <param name="config">insightOps settings.</param>
+        /// <param name="textFormatter">Formats log events.</param>
+        public InsightOpsSink(InsightOpsSinkSettings config, ITextFormatter textFormatter)
         {
             if (config is null)
             {
                 throw new ArgumentNullException(nameof(config));
             }
 
-            _formatProvider = formatProvider; // Optional.
-
+            _textFormatter = textFormatter;
 
             ValidateToken(config.Token);
 
@@ -45,9 +50,10 @@ namespace Serilog.Sinks.InsightOps
                 throw new ArgumentNullException(nameof(logEvent));
             }
 
-            var message = logEvent.RenderMessage(_formatProvider);
+            var stringWriter = new StringWriter();
+            _textFormatter.Format(logEvent, stringWriter);
 
-            _asyncLogger.AddLine(message);
+            _asyncLogger.AddLine(stringWriter.ToString());
         }
 
         /// <summary>
@@ -62,8 +68,8 @@ namespace Serilog.Sinks.InsightOps
             }
 
             var numWaits = 3;
-            while (!AsyncLogger.AreAllQueuesEmpty(TimeSpan.FromSeconds(2)) 
-                && numWaits > 0)
+            while (!AsyncLogger.AreAllQueuesEmpty(TimeSpan.FromSeconds(2)) && 
+                numWaits > 0)
             {
                 numWaits--;
             }
@@ -74,6 +80,8 @@ namespace Serilog.Sinks.InsightOps
                 // to Insight Ops ... :/
                 Console.WriteLine(" *** Failed to flush the Inisight Ops queue 100%");
             }
+
+            GC.SuppressFinalize(this);
         }
 
         /// <summary>
@@ -83,7 +91,7 @@ namespace Serilog.Sinks.InsightOps
         /// So - lets be proactive and error this hard, fast and early.
         /// </summary>
         /// <param name="guid"></param>
-        private void ValidateToken(string token)
+        private static void ValidateToken(string token)
         {
             if (string.IsNullOrWhiteSpace(token))
             {
