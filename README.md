@@ -1,14 +1,39 @@
-# Serilog.Sinks.InsightOps
+<h1 align="center">Serilog Sinks: InsightOps</h1>
 
-A sink for Serilog that writes events to insightOps by Rapid7.
- 
+<div align="center">
+  A sink for Serilog that writes events to insightOps by Rapid7.
+</div>
 
-A Serilog sink that writes log events to insightOps via TCP or HTTPS. This sink is also configured for the most common scenario's - an easy way to get started for most people. As such some advanced features are (by design) left out of this sink.
+<br />
+
+<div align="center">
+    <!-- License -->
+    <a href="https://choosealicense.com/licenses/apache-2.0/">
+    <img src="https://img.shields.io/github/license/PureKrome/serilog-sinks-insightops" alt="License - Apache 2.0" />
+    </a>
+    <!-- NuGet -->
+    <a href="https://www.nuget.org/packages/Serilog.Sinks.InsightOps/">
+    <img src="https://buildstats.info/nuget/Serilog.Sinks.InsightOps" alt="NuGet" />
+    </a>
+    <!-- Github Actions -->
+    <a href="https://github.com/PureKrome/serilog-sinks-insightops/actions/workflows/MergeToMain.yml">
+    <img src="https://github.com/PureKrome/serilog-sinks-insightops/actions/workflows/MergeToMain.yml/badge.svg" alt="Merge Pull Requests into 'main'" />
+    </a>
+</div>
+
+
+A Serilog sink that writes log events to insightOps via TCP or HTTPS.  
+  
+This sink is also configured for the most common scenario's - an easy way to get started for most people. As such some advanced features are (by design) left out of this sink.
+
+<hr/>
 
 ### Table of Contents
 - [Getting started (simple, text based logging)](#getting-started-simple-text-based-logging)
 - [More advanced getting started (loading settings via configuration file)](#more-advanced-getting-started-loading-settings-via-configuration-file)
 - [Structured Logging](#structured-logging)
+
+<hr/>
 
 ## Getting started (simple, text based logging)
 
