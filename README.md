@@ -5,6 +5,11 @@ A sink for Serilog that writes events to insightOps by Rapid7.
 
 A Serilog sink that writes log events to insightOps via TCP or HTTPS. This sink is also configured for the most common scenario's - an easy way to get started for most people. As such some advanced features are (by design) left out of this sink.
 
+### Table of Contents
+- [Getting started (simple, text based logging)](#getting-started-simple-text-based-logging)
+- [More advanced getting started (loading settings via configuration file)](#more-advanced-getting-started-loading-settings-via-configuration-file)
+- [Structured Logging](#-Structured-Logging)
+
 ## Getting started (simple, text based logging)
 
 To use the console sink, first install the [NuGet package](https://nuget.org/packages/serilog.sinks.insightops):
@@ -51,6 +56,20 @@ Log events will look like this at insightOps:
 
 ### Table view
 ![](https://imgur.com/h0x5el3.jpg)
+
+## More advanced getting started (loading settings via configuration file)
+
+Probably the best way to load the configuration settings is via your `appSettings.config` file(s).
+
+Here's a lovely example:
+
+1. ⚠ Make sure you install the `Serilog.Sinks.InsightOps` nuget package, otherwise the Serilog won't be able to load the configuration settings.
+2. Add the relevant section to your `appSettings.config` file(s)
+    - `Using` section
+    - `WriteTo` section
+    - `Name` and `Args` key/values.
+
+![image](https://user-images.githubusercontent.com/899878/148729173-f2a6f368-15fa-4c61-930a-9432bcf34957.png)
 
 
 ## Structured Logging

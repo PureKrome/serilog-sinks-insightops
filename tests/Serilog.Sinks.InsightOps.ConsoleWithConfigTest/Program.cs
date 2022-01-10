@@ -24,7 +24,10 @@ namespace Serilog.Sinks.InsightOps.ConsoleTest
             // Log some fake info.
             var position = new { Latitude = 25, Longitude = 134 };
             var elapsedMs = 34;
+            
             log.Information("Processed {@Position} in {Elapsed:000} ms. Current Time: {TimeAndDate}", position, elapsedMs, DateTime.Now);
+            log.Debug("here's this is a debug {TimeAndDate}", DateTime.Now);
+
 
             Console.WriteLine("Flushing and closing...");
 
