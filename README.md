@@ -8,7 +8,7 @@ A Serilog sink that writes log events to insightOps via TCP or HTTPS. This sink 
 ### Table of Contents
 - [Getting started (simple, text based logging)](#getting-started-simple-text-based-logging)
 - [More advanced getting started (loading settings via configuration file)](#more-advanced-getting-started-loading-settings-via-configuration-file)
-- [Structured Logging](#-Structured-Logging)
+- [Structured Logging](#-structured-sogging)
 
 ## Getting started (simple, text based logging)
 
