@@ -14,6 +14,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "build", "build", "{84F17F94
 		README.md = README.md
 	EndProjectSection
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Serilog.Sinks.InsightOps.ConsoleWithConfigTest", "tests\Serilog.Sinks.InsightOps.ConsoleWithConfigTest\Serilog.Sinks.InsightOps.ConsoleWithConfigTest.csproj", "{7BC53E51-46AD-4BD5-AE1C-35C8E172E3BB}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -28,6 +30,10 @@ Global
 		{5D4C05F2-27DE-4623-A940-ED57D953E17F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{5D4C05F2-27DE-4623-A940-ED57D953E17F}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{5D4C05F2-27DE-4623-A940-ED57D953E17F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7BC53E51-46AD-4BD5-AE1C-35C8E172E3BB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7BC53E51-46AD-4BD5-AE1C-35C8E172E3BB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7BC53E51-46AD-4BD5-AE1C-35C8E172E3BB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7BC53E51-46AD-4BD5-AE1C-35C8E172E3BB}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
