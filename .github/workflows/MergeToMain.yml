@@ -12,11 +12,12 @@ env:
 
 jobs:
   build_and_create_a_nuget:
+    name: Build and create a BETA NuGet package (GPR)
     runs-on: ubuntu-latest
 
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
 
       - name: Build version prefix/suffix
         run: |
@@ -24,7 +25,7 @@ jobs:
           echo "VERSION_SUFFIX=beta" >> $GITHUB_ENV
 
       - name: Setup .NET
-        uses: actions/setup-dotnet@v1
+        uses: actions/setup-dotnet@v3
 
       - run: dotnet restore --verbosity minimal
 
@@ -33,7 +34,7 @@ jobs:
       - run: dotnet pack --configuration Release --no-build --output ./artifacts -p:VersionPrefix=$VERSION_PREFIX --version-suffix $VERSION_SUFFIX -p:IncludeSymbols=true -p:SymbolPackageFormat=snupkg
 
       - name: Publish artifacts
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v3
         with:
           name: NuGetPackage.${{ env.VERSION_PREFIX }}-${{ env.VERSION_SUFFIX }}.nupkg.zip
           path: ./artifacts/*

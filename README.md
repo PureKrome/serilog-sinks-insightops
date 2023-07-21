@@ -30,8 +30,9 @@ This sink is also configured for the most common scenario's - an easy way to get
 
 ### Table of Contents
 - [Getting started (simple, text based logging)](#getting-started-simple-text-based-logging)
-- [More advanced getting started (loading settings via configuration file)](#more-advanced-getting-started-loading-settings-via-configuration-file)
+- [Advanced: loading InsightOps settings via configuration file](#more-advanced-getting-started-loading-settings-via-configuration-file)
 - [Structured Logging](#structured-logging)
+- [Advanced Structured Logging: loading InsightOps settings via configuration file](#structured-logging-advanced-settings-via-configuration-file)
 
 <hr/>
 
@@ -96,6 +97,38 @@ Here's a lovely example:
 
 ![image](https://user-images.githubusercontent.com/899878/148729173-f2a6f368-15fa-4c61-930a-9432bcf34957.png)
 
+<details>
+<summary>Example appSettings.json code (copy/paste friendly)</summary>
+
+```
+{
+    "Serilog": {
+        "Using": [ "Serilog.Sinks.InsightOps" ],
+        "MinimumLevel": {
+            "Default": "Debug",
+            "Override": {
+                "System": "Debug",
+                "Microsoft": "Debug"
+            }
+        },
+        "WriteTo": [
+            {
+                "Name": "Console"
+            },
+            {
+                "Name": "InsightOps",
+                "Args": {
+                    "Token": "<to be manually set>",
+                    "Region": "au",
+                    "UseSsl": "true"
+                }
+            }
+        ]
+    }
+}
+```
+
+</details>
 
 ## Structured Logging
 
@@ -119,9 +152,44 @@ and this will now send the data up to insightOps as Structed Logging:
 
 For the record, there are the types of JSON data formats you can use:
 
-- `JsonFormatter()`
-- `CompactJsonFormatter()`
-- `RenderedCompactJsonFormatter()`
+- `JsonFormatter()` 
+- `CompactJsonFormatter()` [This has no `@m` "message" property. Only the `@mt` "message template"]
+- `RenderedCompactJsonFormatter()` [This has an `@m` message property, plus other values]
+
+## Structured Logging (Advanced) : Settings via configuration file
+
+Here's an example section of loading the settings via the `appSettings.config` file:
+
+Note the `Formatter` arg.
+
+```
+{
+    "Serilog": {
+        "Using": [ "Serilog.Sinks.InsightOps" ],
+        "MinimumLevel": {
+            "Default": "Debug",
+            "Override": {
+                "System": "Debug",
+                "Microsoft": "Debug"
+            }
+        },
+        "WriteTo": [
+            {
+                "Name": "Console"
+            },
+            {
+                "Name": "InsightOps",
+                "Args": {
+                    "Token": "<to be manually set>",
+                    "Region": "au",
+                    "UseSsl": "true",
+                    "Formatter": "Serilog.Formatting.Compact.RenderedCompactJsonFormatter, Serilog.Formatting.Compact"
+                }
+            }
+        ]
+    }
+}
+```
 
 For more detailed explanation of these, [this is a blog post](https://nblumhardt.com/2016/07/serilog-2-0-json-improvements/) from the Serilog author.
 
