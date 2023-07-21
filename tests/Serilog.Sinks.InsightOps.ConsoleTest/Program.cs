@@ -15,17 +15,14 @@ namespace Serilog.Sinks.InsightOps.ConsoleTest
             Console.WriteLine("Starting.");
             
             // NOTE: Please replace with your own settings.
-            var settings = new InsightOpsSinkSettings
-            {
-                Region = "au", // au, eu, jp or us
-                Token = "<some guid from your account>",
-                UseSsl = false
-            };
+            const string region = "au"; // au, eu, jp or us.
+            const string token = "<some guid from your account>";
+            const bool useSsl = false;
 
             // Create our logger.
             var log = new LoggerConfiguration()
                 .MinimumLevel.Debug()
-                .WriteTo.InsightOps(settings, new RenderedCompactJsonFormatter())
+                .WriteTo.InsightOps(region, token, new RenderedCompactJsonFormatter(), useSsl)
                 .WriteTo.Console(new CompactJsonFormatter())
                 .WriteTo.Seq("http://localhost:5301")
                 .CreateLogger();
