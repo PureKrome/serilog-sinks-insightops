@@ -51,7 +51,8 @@ var settings = new InsightOpsSinkSettings
 {
     Region = "<to fill in by you>", // au, eu, jp or us
     Token = "<to fill in by you>", // Guid, taken from your InsightOps log account
-    UseSsl = false // or True for sending via HTTPS
+    UseSsl = false, // or True for sending via HTTPS. Make sure you can handle TLS1.2 (or newer)
+    Debug = false // or True to see low level R7 Insight ops debug messages in the console (this is helpful actually!)
 };
 ```
 
