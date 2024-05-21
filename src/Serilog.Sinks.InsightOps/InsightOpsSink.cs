@@ -45,7 +45,7 @@ namespace Serilog.Sinks.InsightOps
 
         public void Emit(LogEvent logEvent)
         {
-            if (logEvent is null)
+            if (logEvent == null)
             {
                 throw new ArgumentNullException(nameof(logEvent));
             }
