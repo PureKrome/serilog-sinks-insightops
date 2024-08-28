@@ -75,96 +75,57 @@ namespace Serilog.Sinks.InsightOps
             return sinkConfiguration.Sink(sink, restrictedToMinimumLevel, levelSwitch);
         }
 
-        ///// <summary>
-        ///// Configuration file POCO class: writes events logs to insightOps.
-        ///// </summary>
-        ///// <param name="sinkConfiguration">Logger sink configuration.</param>
-        ///// <param name="token">Secret token which links these logs to your logset/account.</param>
-        ///// <param name="region">Region to send data to. User: au, eu, us, ca, jp.</param>
-        ///// <param name="useSsl">Use SSL or not. (SSl -might- have a slight performance hit, but don't quote me on that).</param>
-        ///// <param name="restrictedToMinimumLevel">The minimum level for events passed through the sink. Ignored when levelSwitch is specified.</param>
-        ///// <param name="formatter">The formatter to log events in a textual representation. E.G. a compact Json representation for structured logging.</param>
-        ///// <param name="levelSwitch">A switch allowing the pass-through minimum level to be changed at runtime.</param>
-        ///// <returns></returns>
-        //public static LoggerConfiguration InsightOps(
-        //    this LoggerSinkConfiguration sinkConfiguration,
-        //    string token,
-        //    string region,
-        //    ITextFormatter formatter = null,
-        //    bool useSsl = true,
-        //    LogEventLevel restrictedToMinimumLevel = LevelAlias.Minimum,
-        //    LoggingLevelSwitch levelSwitch = null)
-        //{
-        //    // We need a formatter, so lets use the other constructor.
-        //    if (formatter == null)
-        //    {
-        //        return InsightOps(sinkConfiguration, token, region, useSsl, restrictedToMinimumLevel, DefaultOutputTemplate, null, levelSwitch);
-        //    }
+        /// <summary>
+        /// Configuration file POCO class: writes events logs to insightOps.
+        /// </summary>
+        /// <param name="sinkConfiguration">Logger sink configuration.</param>
+        /// <param name="token">Secret token which links these logs to your logset/account.</param>
+        /// <param name="region">Region to send data to. User: au, eu, us, ca, jp.</param>
+        /// <param name="useSsl">Use SSL or not. (SSl -might- have a slight performance hit, but don't quote me on that).</param>
+        /// <param name="debug">Sets the debug flag. Will print error messages to System.Diagnostics.Trace</param>
+        /// <param name="isUsingDataHub">Set to true to use custom DataHub instance instead of Logentries service.</param>
+        /// <param name="dataHubAddress">DataHub server address.</param>
+        /// <param name="dataHubPort">DataHub server port.</param>
+        /// <param name="hostName">User-defined host name. If empty, the library will try to obtain it automatically.</param>
+        /// <param name="logHostname">Set to true to send HostName alongside with the log message.</param>
+        /// <param name="logId">Log ID.</param>
+        /// <param name="restrictedToMinimumLevel">The minimum level for events passed through the sink. Ignored when levelSwitch is specified.</param>
+        /// <param name="formatter">The formatter to log events in a textual representation. E.G. a compact Json representation for structured logging.</param>
+        /// <param name="levelSwitch">A switch allowing the pass-through minimum level to be changed at runtime.</param>
+        /// <returns></returns>
+        public static LoggerConfiguration InsightOps(
+            this LoggerSinkConfiguration sinkConfiguration,
+            string token,
+            string region,
+            bool useSsl = true,
+            bool debug = false,
+            bool isUsingDataHub = false,
+            string dataHubAddress = null,
+            int dataHubPort = 0,
+            string hostName = null, 
+            bool logHostname = false,
+            string logId = null,
+            ITextFormatter formatter = null,
+            LogEventLevel restrictedToMinimumLevel = LevelAlias.Minimum,
+            LoggingLevelSwitch levelSwitch = null)
+        {
+            var settings = new InsightOpsSinkSettings
+            {
+                Token = token,
+                Region = region,
+                UseSsl = useSsl,
+                Debug = debug,
 
-        //    // We have a custom formatter, so we need to use the custom output template.
-        //    return InsightOps(sinkConfiguration, token, region, useSsl, formatter, restrictedToMinimumLevel, levelSwitch);
-        //}
+                // Rarely used but still available to the developer.
+                IsUsingDataHub = isUsingDataHub,
+                DataHubAddress = dataHubAddress,
+                DataHubPort = dataHubPort,
+                LogHostname = logHostname,
+                HostName = hostName,
+                LogID = logId
+            };
 
-        ///// <summary>
-        ///// Configuration file POCO class: writes events logs to insightOps.
-        ///// </summary>
-        ///// <param name="sinkConfiguration">Logger sink configuration.</param>
-        ///// <param name="settings">Configuration settings.</param>
-        ///// <param name="restrictedToMinimumLevel">The minimum level for events passed through the sink. Ignored when levelSwitch is specified.</param>
-        ///// <param name="outputTemplate">Custom output template. If not provided, will default to <code>[{Timestamp:HH:mm:ss} {Level:u3}] {Message:lj}{NewLine}{Exception}</code></param>
-        ///// <param name="formatProvider">Optional: Supplies culture-specific formatting information, or null.</param>
-        ///// <param name="levelSwitch">A switch allowing the pass-through minimum level to be changed at runtime.</param>
-        ///// <returns></returns>
-        //public static LoggerConfiguration InsightOps(
-        //    this LoggerSinkConfiguration sinkConfiguration,
-        //    string token,
-        //    string region,
-        //    bool useSsl = true,
-        //    LogEventLevel restrictedToMinimumLevel = LevelAlias.Minimum,
-        //    string outputTemplate = DefaultOutputTemplate,
-        //    IFormatProvider formatProvider = null,
-        //    LoggingLevelSwitch levelSwitch = null)
-        //{
-        //    if (string.IsNullOrWhiteSpace(outputTemplate))
-        //    {
-        //        throw new ArgumentException($"'{nameof(outputTemplate)}' cannot be null or whitespace", nameof(outputTemplate));
-        //    }
-
-        //    var formatter = new MessageTemplateTextFormatter(outputTemplate, formatProvider);
-
-        //    return sinkConfiguration.InsightOps(token, region, formatter, useSsl, restrictedToMinimumLevel, levelSwitch);
-        //}
-
-        ///// <summary>
-        ///// Configuration file POCO class: writes events logs to insightOps.
-        ///// </summary>
-        ///// <param name="sinkConfiguration">Logger sink configuration.</param>
-        ///// <param name="settings">Configuration settings.</param>
-        ///// <param name="formatter">The formatter to log events in a textual representation. E.G. a compact Json representation for structured logging.</param>
-        ///// <param name="restrictedToMinimumLevel">The minimum level for events passed through the sink. Ignored when levelSwitch is specified.</param>
-        ///// <param name="levelSwitch">A switch allowing the pass-through minimum level to be changed at runtime.</param>
-        ///// <returns></returns>
-        //public static LoggerConfiguration InsightOps(
-        //    this LoggerSinkConfiguration sinkConfiguration,
-        //    string token,
-        //    string region,
-        //    bool useSsl = true,
-        //    ITextFormatter formatter = null,
-        //    LogEventLevel restrictedToMinimumLevel = LevelAlias.Minimum,
-        //    LoggingLevelSwitch levelSwitch = null)
-        //{
-        //    var settings = new InsightOpsSinkSettings
-        //    {
-        //        Token = token,
-        //        Region = region,
-        //        UseSsl = useSsl
-        //    };
-
-        //    ArgumentNullException.ThrowIfNull(formatter);
-
-        //    var sink = new InsightOpsSink(settings, formatter);
-
-        //    return sinkConfiguration.Sink(sink, restrictedToMinimumLevel, levelSwitch);
-        //}
+            return InsightOps(sinkConfiguration, settings, formatter, restrictedToMinimumLevel, levelSwitch);
+        }
     }
 }

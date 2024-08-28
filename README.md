@@ -53,6 +53,15 @@ var settings = new InsightOpsSinkSettings
     Token = "<to fill in by you>", // Guid, taken from your InsightOps log account
     UseSsl = false, // or True for sending via HTTPS. Make sure you can handle TLS1.2 (or newer)
     Debug = false // or True to see low level R7 Insight ops debug messages in the console (this is helpful actually!)
+
+    // Optional settings people rarely use. You can ignore these, unless you know what you're doing:
+    // (and these are the defaults)
+    IsUsingDataHub = false, // Set to true to use custom DataHub instance instead of Logentries service.
+    DataHubAddress = null, // DataHub server address
+    DataHubPort = 0, // DataHub server port
+    LogHostname = null, // Set to true to send HostName alongside with the log message
+    HostName = null, // User-defined host name. If empty the library will try to obtain it automatically
+    LogID = null // Log ID
 };
 ```
 
